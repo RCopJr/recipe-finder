@@ -10,12 +10,18 @@ app.use(bodyParser.json());
 
 app.get("/search", function (req, res) {
   const search = req.query.search;
+  const { maxCarbs, minProtein, minCal, ingredients } = req.query.queryParams;
+  console.log(maxCarbs, minProtein, minCal, ingredients);
+
   axios
     .get("https://api.spoonacular.com/recipes/complexSearch", {
       params: {
         apiKey: process.env.API_KEY,
         number: 1,
-        maxCalories: 500,
+        minCalories: minCal,
+        minProtein: minProtein,
+        maxCarbs: maxCarbs,
+        ingredients: ingredients,
         addRecipeInformation: true,
         query: search,
       },

@@ -23,12 +23,7 @@ function App() {
     title: "",
     url: "",
   });
-  const [checkboxes, setCheckboxes] = useState({
-    maxCarbs: false,
-    minProtein: false,
-    minCal: false,
-    ingredients: false,
-  });
+  const [extraQueryCheck, setExtraQueryCheck] = useState(false);
 
   const [values, setValues] = useState({
     maxCarbs: "",
@@ -36,9 +31,6 @@ function App() {
     minCal: "",
     ingredients: "",
   });
-
-  const { showMaxCarbs, showMinProtein, showMinCal, showIngredients } =
-    checkboxes;
 
   const { maxCarbs, minProtein, minCal, ingredients } = values;
 
@@ -52,6 +44,7 @@ function App() {
       .get("/search", {
         params: {
           search: search,
+          queryParams: values,
         },
       })
       .then((res) => {
@@ -64,18 +57,16 @@ function App() {
   }
 
   function handleCheckboxChange(event) {
-    const name = event.target.name;
-    const newCheckedValue = event.target.checked; //How does this work? Shouldn't we be returning opposite of checked?
-    setCheckboxes((prevCheckboxes) => ({
-      ...prevCheckboxes,
-      [name]: newCheckedValue,
-    }));
+    setExtraQueryCheck(event.target.checked);
   }
 
   function handleValueChange(event) {
     const name = event.target.name;
-    const newValue = event.target.value;
-    console.log(name, newValue);
+    let newValue = event.target.value;
+
+    if (name !== "ingredients" && newValue < 0) {
+      newValue = 0;
+    }
     setValues((prevValues) => ({
       ...prevValues,
       [name]: newValue,
@@ -114,93 +105,67 @@ function App() {
               control={
                 <Checkbox
                   onChange={handleCheckboxChange}
-                  checked={showMaxCarbs}
-                  name="maxCarbs"
+                  checked={extraQueryCheck}
                 />
               } //The control is what type of input it is (Radio, Switch, Checkbox)
-              label="Max Carbs" //The label assigned to the control field
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  onChange={handleCheckboxChange}
-                  checked={showMinProtein}
-                  name="minProtein"
-                />
-              }
-              label="Min Protein"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  onChange={handleCheckboxChange}
-                  checked={showMinCal}
-                  name="minCal"
-                />
-              }
-              label="Min Calories"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  onChange={handleCheckboxChange}
-                  checked={showIngredients}
-                  name="ingredients"
-                />
-              }
-              label="Ingredients"
+              label="Show query params" //The label assigned to the control field
             />
           </FormGroup>
         </Grid>
-        <Grid item xs={2}>
-          <Box
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "10ch" },
-            }}
-          >
-            <TextField
-              onChange={handleValueChange}
-              label="Carbs (g)"
-              type="number"
-              InputLabelProps={{ shrink: true }} //What does this do?
-              value={maxCarbs}
-              name="maxCarbs"
-            />
-            <TextField
-              onChange={handleValueChange}
-              label="Mininum Calories"
-              type="number"
-              InputLabelProps={{ shrink: true }}
-              value={minCal}
-              name="minCal"
-            />
-          </Box>
-        </Grid>
-        <Grid item xs={2}>
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "10ch" },
-            }}
-          >
-            <TextField
-              onChange={handleValueChange}
-              label="Protein (g)"
-              type="number"
-              InputLabelProps={{ shrink: true }} //What does this do?
-              value={minProtein}
-              name="minProtein"
-            />
-            <TextField
-              onChange={handleValueChange}
-              label="Ingredients"
-              type="number"
-              InputLabelProps={{ shrink: true }}
-              value={ingredients}
-              name="ingredients"
-            />
-          </Box>
-        </Grid>
+
+        {extraQueryCheck && (
+          <Grid item xs={2}>
+            <Box
+              sx={{
+                "& .MuiTextField-root": { m: 1, width: "10ch" },
+              }}
+            >
+              <TextField
+                onChange={handleValueChange}
+                label="Carbs (g)"
+                type="number"
+                InputLabelProps={{ shrink: true }} //What does this do?
+                value={maxCarbs}
+                name="maxCarbs"
+              />
+
+              <TextField
+                onChange={handleValueChange}
+                label="Mininum Calories"
+                type="number"
+                InputLabelProps={{ shrink: true }}
+                value={minCal}
+                name="minCal"
+              />
+            </Box>
+          </Grid>
+        )}
+        {extraQueryCheck && (
+          <Grid item xs={2}>
+            <Box
+              component="form"
+              sx={{
+                "& .MuiTextField-root": { m: 1, width: "10ch" },
+              }}
+            >
+              <TextField
+                onChange={handleValueChange}
+                label="Protein (g)"
+                type="number"
+                InputLabelProps={{ shrink: true }} //What does this do?
+                value={minProtein}
+                name="minProtein"
+              />
+              <TextField
+                onChange={handleValueChange}
+                label="Ingredients"
+                InputLabelProps={{ shrink: true }}
+                value={ingredients}
+                name="ingredients"
+              />
+            </Box>
+          </Grid>
+        )}
         {recipe.title && recipe.url && (
           <Grid item xs={8}>
             <Card variant="outlined">
