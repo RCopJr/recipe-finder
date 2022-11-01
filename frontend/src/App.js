@@ -22,7 +22,11 @@ function App() {
   const [recipe, setRecipe] = useState({
     title: "",
     url: "",
+    nutrition: [],
   });
+
+  const { title, url, nutrition } = recipe;
+
   const [extraQueryCheck, setExtraQueryCheck] = useState(false);
 
   const [values, setValues] = useState({
@@ -52,6 +56,7 @@ function App() {
           ...prevRecipe,
           title: res.data.title,
           url: res.data.url,
+          nutrition: res.data.nutrition,
         }));
       });
   }
@@ -176,13 +181,20 @@ function App() {
                     color="text.secondary"
                     gutterBottom
                   >
-                    {recipe.title}
+                    {title}
                   </Typography>
-                  <a href={recipe.url}>
+                  <a href={url}>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                       See recipe here.
                     </Typography>
                   </a>
+                  {nutrition.map((nutrient) => {
+                    return (
+                      <Typography>
+                        {nutrient.name}: {nutrient.amount} {nutrient.unit}
+                      </Typography>
+                    );
+                  })}
                 </CardContent>
               </CardContent>
             </Card>

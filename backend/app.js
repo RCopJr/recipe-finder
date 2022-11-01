@@ -23,6 +23,7 @@ app.get("/search", function (req, res) {
         maxCarbs: maxCarbs,
         ingredients: ingredients,
         addRecipeInformation: true,
+        addRecipeNutrition: true,
         query: search,
       },
     })
@@ -30,7 +31,13 @@ app.get("/search", function (req, res) {
       const result = response.data.results[0];
       const title = result.title;
       const sourceUrl = result.sourceUrl;
-      res.json({ title: title, url: sourceUrl });
+      const nutrition = result.nutrition.nutrients.filter((nutrient) => {
+        return ["Protein", "Calories", "Fat", "Carbohydrates"].includes(
+          nutrient.name
+        );
+      });
+
+      res.json({ title: title, url: sourceUrl, nutrition: nutrition });
     });
 });
 
