@@ -3,15 +3,14 @@ import {
   Button,
   TextField,
   Grid,
-  Card,
-  CardContent,
-  Typography,
   FormGroup,
   FormControlLabel,
   Checkbox,
   Box,
 } from "@mui/material";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
+import RecipeCard from "./RecipeCard";
 
 const client = axios.create({
   baseURL: "http://localhost:3000/",
@@ -19,24 +18,18 @@ const client = axios.create({
 
 function App() {
   const [search, setSearch] = useState("");
-  const [recipe, setRecipe] = useState({
-    title: "",
-    url: "",
-    nutrition: [],
-  });
-
-  const { title, url, nutrition } = recipe;
+  const [recipes, setRecipes] = useState([]);
 
   const [extraQueryCheck, setExtraQueryCheck] = useState(false);
 
   const [values, setValues] = useState({
     maxCarbs: "",
     minProtein: "",
-    minCal: "",
+    minCalories: "",
     ingredients: "",
   });
 
-  const { maxCarbs, minProtein, minCal, ingredients } = values;
+  const { maxCarbs, minProtein, minCalories, ingredients } = values;
 
   function handleSearch(event) {
     setSearch(event.target.value);
@@ -44,6 +37,7 @@ function App() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    console.log("clicked");
     client
       .get("/search", {
         params: {
@@ -52,12 +46,8 @@ function App() {
         },
       })
       .then((res) => {
-        setRecipe((prevRecipe) => ({
-          ...prevRecipe,
-          title: res.data.title,
-          url: res.data.url,
-          nutrition: res.data.nutrition,
-        }));
+        console.log(res.data.recipes);
+        setRecipes(res.data.recipes);
       });
   }
 
@@ -80,7 +70,7 @@ function App() {
 
   return (
     <div>
-      <h1>Test</h1>
+      <h1>Recipe Finder</h1>
       <Grid
         container
         spacing={4}
@@ -117,7 +107,6 @@ function App() {
             />
           </FormGroup>
         </Grid>
-
         {extraQueryCheck && (
           <Grid item xs={2}>
             <Box
@@ -139,8 +128,8 @@ function App() {
                 label="Mininum Calories"
                 type="number"
                 InputLabelProps={{ shrink: true }}
-                value={minCal}
-                name="minCal"
+                value={minCalories}
+                name="minCalories"
               />
             </Box>
           </Grid>
@@ -171,48 +160,23 @@ function App() {
             </Box>
           </Grid>
         )}
-        {recipe.title && recipe.url && (
-          <Grid item xs={8}>
-            <Card variant="outlined">
-              <CardContent>
-                <CardContent>
-                  <Typography
-                    sx={{ fontSize: 14 }}
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {title}
-                  </Typography>
-                  <a href={url}>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                      See recipe here.
-                    </Typography>
-                  </a>
-                  {nutrition.map((nutrient) => {
-                    return (
-                      <Typography>
-                        {nutrient.name}: {nutrient.amount} {nutrient.unit}
-                      </Typography>
-                    );
-                  })}
-                </CardContent>
-              </CardContent>
-            </Card>
-          </Grid>
-        )}
+        {recipes[0] &&
+          recipes.map((recipe) => {
+            const id = uuidv4();
+            const { imageUrl, title, url, nutrition } = recipe;
+            return (
+              <RecipeCard
+                key={id}
+                imageUrl={imageUrl}
+                title={title}
+                url={url}
+                nutrition={nutrition}
+              />
+            );
+          })}
       </Grid>
     </div>
   );
 }
 
 export default App;
-// useEffect(() => {
-//   // client.get("/test").then((response) => console.log(response.data));
-//   client
-//     .post("", {
-//       data: "poop",
-//     })
-//     .then((response) => {
-//       console.log("Worked");
-//     });
-// }, []);
