@@ -1,15 +1,7 @@
 import React, { useState } from "react";
-import {
-  Button,
-  TextField,
-  Grid,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  Box,
-  Collapse,
-} from "@mui/material";
-import { ExpandMoreIcon } from "@mui/icons-material/ExpandMore";
+import { Button, TextField, Grid, Collapse } from "@mui/material";
+import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
+import RemoveCircleOutlineRoundedIcon from "@mui/icons-material/RemoveCircleOutlineRounded";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import RecipeCard from "./RecipeCard";
@@ -21,8 +13,6 @@ const client = axios.create({
 function App() {
   const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
-
-  const [extraQueryCheck, setExtraQueryCheck] = useState(false);
 
   const [values, setValues] = useState({
     maxCarbs: "",
@@ -57,7 +47,6 @@ function App() {
 
   function handleCheckboxChange(event) {
     setExpanded(!expanded);
-    setExtraQueryCheck(event.target.checked);
   }
 
   function handleValueChange(event) {
@@ -74,44 +63,43 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Recipe Finder</h1>
+    <>
       <Grid
         container
-        spacing={4}
+        spacing={2}
         direction="column"
         alignItems="center"
         justify="center"
         wrap="wrap"
       >
-        <Grid item xs={8}>
-          <TextField
-            onChange={handleSearch}
-            name="search"
-            label="Search field"
-            type="search"
-            variant="filled"
-            value={search}
-            fullWidth // Used to take up full width of container
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <Button onClick={handleSubmit} type="submit" variant="contained">
-            Go
-          </Button>
+        <Grid item xs={12}>
+          <Grid alignItems="center" justify="center" container spacing={2}>
+            <Grid item xs={9}>
+              <TextField
+                onChange={handleSearch}
+                name="search"
+                label="Search field"
+                type="search"
+                variant="filled"
+                value={search}
+                // fullWidth // Used to take up full width of container
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Button onClick={handleSubmit} variant="contained">
+                Find
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12}>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  onChange={handleCheckboxChange}
-                  checked={extraQueryCheck}
-                />
-              } //The control is what type of input it is (Radio, Switch, Checkbox)
-              label="Filter" //The label assigned to the control field
-            />
-          </FormGroup>
+          <Button onClick={handleCheckboxChange} variant="contained" fullWidth>
+            {expanded ? (
+              <RemoveCircleOutlineRoundedIcon />
+            ) : (
+              <AddCircleOutlineRoundedIcon />
+            )}
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -121,60 +109,48 @@ function App() {
               alignItems="center"
               justify="center"
               wrap="wrap"
-              space={2}
+              spacing={2}
             >
-              {extraQueryCheck && (
-                <Grid item xs={6}>
-                  <Box
-                    sx={{
-                      "& .MuiTextField-root": { m: 1, width: "10ch" },
-                    }}
-                  >
-                    <TextField
-                      onChange={handleValueChange}
-                      label="Carbs (g)"
-                      type="number"
-                      InputLabelProps={{ shrink: true }} //What does this do?
-                      value={maxCarbs}
-                      name="maxCarbs"
-                    />
-                    <TextField
-                      onChange={handleValueChange}
-                      label="Mininum Calories"
-                      type="number"
-                      InputLabelProps={{ shrink: true }}
-                      value={minCalories}
-                      name="minCalories"
-                    />
-                  </Box>
-                </Grid>
-              )}
-              {extraQueryCheck && (
-                <Grid item xs={6}>
-                  <Box
-                    component="form"
-                    sx={{
-                      "& .MuiTextField-root": { m: 1, width: "10ch" },
-                    }}
-                  >
-                    <TextField
-                      onChange={handleValueChange}
-                      label="Protein (g)"
-                      type="number"
-                      InputLabelProps={{ shrink: true }} //What does this do?
-                      value={minProtein}
-                      name="minProtein"
-                    />
-                    <TextField
-                      onChange={handleValueChange}
-                      label="includeIngredients"
-                      InputLabelProps={{ shrink: true }}
-                      value={includeIngredients}
-                      name="includeIngredients"
-                    />
-                  </Box>
-                </Grid>
-              )}
+              <Grid item xs={6}>
+                <TextField
+                  onChange={handleValueChange}
+                  label="Maximum Carbs (g)"
+                  type="number"
+                  InputLabelProps={{ shrink: true }} //What does this do?
+                  value={maxCarbs}
+                  name="maxCarbs"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  onChange={handleValueChange}
+                  label="Minimum Calories"
+                  type="number"
+                  InputLabelProps={{ shrink: true }}
+                  value={minCalories}
+                  name="minCalories"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  onChange={handleValueChange}
+                  label="Minimum Protein (g)"
+                  type="number"
+                  InputLabelProps={{ shrink: true }} //What does this do?
+                  value={minProtein}
+                  name="minProtein"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  onChange={handleValueChange}
+                  label="Include Ingredients"
+                  InputLabelProps={{ shrink: true }}
+                  value={includeIngredients}
+                  name="includeIngredients"
+                />
+              </Grid>
             </Grid>
           </Collapse>
         </Grid>
@@ -193,7 +169,7 @@ function App() {
             );
           })}
       </Grid>
-    </div>
+    </>
   );
 }
 
