@@ -7,7 +7,9 @@ import {
   FormControlLabel,
   Checkbox,
   Box,
+  Collapse,
 } from "@mui/material";
+import { ExpandMoreIcon } from "@mui/icons-material/ExpandMore";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import RecipeCard from "./RecipeCard";
@@ -26,10 +28,12 @@ function App() {
     maxCarbs: "",
     minProtein: "",
     minCalories: "",
-    ingredients: "",
+    includeIngredients: "",
   });
 
-  const { maxCarbs, minProtein, minCalories, ingredients } = values;
+  const [expanded, setExpanded] = useState(false);
+
+  const { maxCarbs, minProtein, minCalories, includeIngredients } = values;
 
   function handleSearch(event) {
     setSearch(event.target.value);
@@ -52,6 +56,7 @@ function App() {
   }
 
   function handleCheckboxChange(event) {
+    setExpanded(!expanded);
     setExtraQueryCheck(event.target.checked);
   }
 
@@ -59,7 +64,7 @@ function App() {
     const name = event.target.name;
     let newValue = event.target.value;
 
-    if (name !== "ingredients" && newValue < 0) {
+    if (name !== "includeIngredients" && newValue < 0) {
       newValue = 0;
     }
     setValues((prevValues) => ({
@@ -74,6 +79,7 @@ function App() {
       <Grid
         container
         spacing={4}
+        direction="column"
         alignItems="center"
         justify="center"
         wrap="wrap"
@@ -94,7 +100,7 @@ function App() {
             Go
           </Button>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12}>
           <FormGroup>
             <FormControlLabel
               control={
@@ -103,63 +109,75 @@ function App() {
                   checked={extraQueryCheck}
                 />
               } //The control is what type of input it is (Radio, Switch, Checkbox)
-              label="Show query params" //The label assigned to the control field
+              label="Filter" //The label assigned to the control field
             />
           </FormGroup>
         </Grid>
-        {extraQueryCheck && (
-          <Grid item xs={2}>
-            <Box
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "10ch" },
-              }}
+        <Grid item xs={12}>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justify="center"
+              wrap="wrap"
+              space={2}
             >
-              <TextField
-                onChange={handleValueChange}
-                label="Carbs (g)"
-                type="number"
-                InputLabelProps={{ shrink: true }} //What does this do?
-                value={maxCarbs}
-                name="maxCarbs"
-              />
-
-              <TextField
-                onChange={handleValueChange}
-                label="Mininum Calories"
-                type="number"
-                InputLabelProps={{ shrink: true }}
-                value={minCalories}
-                name="minCalories"
-              />
-            </Box>
-          </Grid>
-        )}
-        {extraQueryCheck && (
-          <Grid item xs={2}>
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "10ch" },
-              }}
-            >
-              <TextField
-                onChange={handleValueChange}
-                label="Protein (g)"
-                type="number"
-                InputLabelProps={{ shrink: true }} //What does this do?
-                value={minProtein}
-                name="minProtein"
-              />
-              <TextField
-                onChange={handleValueChange}
-                label="Ingredients"
-                InputLabelProps={{ shrink: true }}
-                value={ingredients}
-                name="ingredients"
-              />
-            </Box>
-          </Grid>
-        )}
+              {extraQueryCheck && (
+                <Grid item xs={6}>
+                  <Box
+                    sx={{
+                      "& .MuiTextField-root": { m: 1, width: "10ch" },
+                    }}
+                  >
+                    <TextField
+                      onChange={handleValueChange}
+                      label="Carbs (g)"
+                      type="number"
+                      InputLabelProps={{ shrink: true }} //What does this do?
+                      value={maxCarbs}
+                      name="maxCarbs"
+                    />
+                    <TextField
+                      onChange={handleValueChange}
+                      label="Mininum Calories"
+                      type="number"
+                      InputLabelProps={{ shrink: true }}
+                      value={minCalories}
+                      name="minCalories"
+                    />
+                  </Box>
+                </Grid>
+              )}
+              {extraQueryCheck && (
+                <Grid item xs={6}>
+                  <Box
+                    component="form"
+                    sx={{
+                      "& .MuiTextField-root": { m: 1, width: "10ch" },
+                    }}
+                  >
+                    <TextField
+                      onChange={handleValueChange}
+                      label="Protein (g)"
+                      type="number"
+                      InputLabelProps={{ shrink: true }} //What does this do?
+                      value={minProtein}
+                      name="minProtein"
+                    />
+                    <TextField
+                      onChange={handleValueChange}
+                      label="includeIngredients"
+                      InputLabelProps={{ shrink: true }}
+                      value={includeIngredients}
+                      name="includeIngredients"
+                    />
+                  </Box>
+                </Grid>
+              )}
+            </Grid>
+          </Collapse>
+        </Grid>
         {recipes[0] &&
           recipes.map((recipe) => {
             const id = uuidv4();
