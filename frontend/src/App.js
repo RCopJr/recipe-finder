@@ -85,43 +85,39 @@ function App() {
         justifyContent="center"
         wrap="wrap"
       >
-        <Grid item xs={12}>
-          <Grid alignItems="center" justify="center" container spacing={2}>
-            <Grid item xs={12}>
-              <Paper
-                sx={{
-                  p: "2px 4px",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <IconButton
-                  onClick={handleCheckboxChange}
-                  sx={{ p: "10px" }}
-                  aria-label="expand"
-                >
-                  {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                </IconButton>
-                <InputBase
-                  onChange={handleSearch}
-                  placeholder="Search Recipes"
-                  sx={{ ml: 1, flex: 1 }}
-                  inputProps={{ "aria-label": "search recipes" }}
-                  value={search}
-                />
-                <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                <IconButton
-                  onClick={handleSubmit}
-                  sx={{ p: "10px" }}
-                  aria-label="search"
-                >
-                  <SearchIcon />
-                </IconButton>
-              </Paper>
-            </Grid>
-          </Grid>
+        <Grid item xs={11}>
+          <Paper
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <IconButton
+              onClick={handleCheckboxChange}
+              sx={{ p: "10px" }}
+              aria-label="expand"
+            >
+              {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            </IconButton>
+            <InputBase
+              onChange={handleSearch}
+              placeholder="Search Recipes"
+              sx={{ ml: 1, flex: 1 }}
+              inputProps={{ "aria-label": "search recipes" }}
+              value={search}
+            />
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton
+              onClick={handleSubmit}
+              sx={{ p: "10px" }}
+              aria-label="search"
+            >
+              <SearchIcon />
+            </IconButton>
+          </Paper>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={11}>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <Filters
               handleValueChange={handleValueChange}
@@ -137,7 +133,7 @@ function App() {
             const id = uuidv4();
             const { imageUrl, title, url, nutrition } = recipe;
             return (
-              <Grid key={id} item xs={10}>
+              <Grid key={id} item xs={11}>
                 <RecipeCard
                   imageUrl={imageUrl}
                   title={title}

@@ -33,6 +33,7 @@ function Filters(props) {
           InputLabelProps={{ shrink: true }}
           value={props.minCalories}
           name="minCalories"
+          fullWidth
         />
       </Grid>
       <Grid item xs={6}>
@@ -45,6 +46,7 @@ function Filters(props) {
           InputLabelProps={{ shrink: true }} //What does this do?
           value={props.minProtein}
           name="minProtein"
+          fullWidth
         />
       </Grid>
       <Grid item xs={6}>
@@ -56,6 +58,7 @@ function Filters(props) {
           InputLabelProps={{ shrink: true }}
           value={props.includeIngredients}
           name="includeIngredients"
+          fullWidth
         />
       </Grid>
     </Grid>
