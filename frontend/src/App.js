@@ -1,10 +1,23 @@
 import React, { useState } from "react";
-import { Button, TextField, Grid, Collapse } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Grid,
+  Collapse,
+  Paper,
+  IconButton,
+  InputBase,
+  Divider,
+} from "@mui/material";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import RemoveCircleOutlineRoundedIcon from "@mui/icons-material/RemoveCircleOutlineRounded";
+import SearchIcon from "@mui/icons-material/Search";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import RecipeCard from "./RecipeCard";
+import Filters from "./Filters";
 
 const client = axios.create({
   baseURL: "http://localhost:3000/",
@@ -45,7 +58,7 @@ function App() {
       });
   }
 
-  function handleCheckboxChange(event) {
+  function handleCheckboxChange() {
     setExpanded(!expanded);
   }
 
@@ -67,91 +80,56 @@ function App() {
       <Grid
         container
         spacing={2}
-        direction="column"
+        direction="row"
         alignItems="center"
-        justify="center"
+        justifyContent="center"
         wrap="wrap"
       >
         <Grid item xs={12}>
           <Grid alignItems="center" justify="center" container spacing={2}>
-            <Grid item xs={9}>
-              <TextField
-                onChange={handleSearch}
-                name="search"
-                label="Search field"
-                type="search"
-                variant="filled"
-                value={search}
-                // fullWidth // Used to take up full width of container
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <Button onClick={handleSubmit} variant="contained">
-                Find
-              </Button>
+            <Grid item xs={12}>
+              <Paper
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <IconButton
+                  onClick={handleCheckboxChange}
+                  sx={{ p: "10px" }}
+                  aria-label="expand"
+                >
+                  {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                </IconButton>
+                <InputBase
+                  onChange={handleSearch}
+                  placeholder="Search Recipes"
+                  sx={{ ml: 1, flex: 1 }}
+                  inputProps={{ "aria-label": "search recipes" }}
+                  value={search}
+                />
+                <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                <IconButton
+                  onClick={handleSubmit}
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Button onClick={handleCheckboxChange} variant="contained" fullWidth>
-            {expanded ? (
-              <RemoveCircleOutlineRoundedIcon />
-            ) : (
-              <AddCircleOutlineRoundedIcon />
-            )}
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justify="center"
-              wrap="wrap"
-              spacing={2}
-            >
-              <Grid item xs={6}>
-                <TextField
-                  onChange={handleValueChange}
-                  label="Maximum Carbs (g)"
-                  type="number"
-                  InputLabelProps={{ shrink: true }} //What does this do?
-                  value={maxCarbs}
-                  name="maxCarbs"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  onChange={handleValueChange}
-                  label="Minimum Calories"
-                  type="number"
-                  InputLabelProps={{ shrink: true }}
-                  value={minCalories}
-                  name="minCalories"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  onChange={handleValueChange}
-                  label="Minimum Protein (g)"
-                  type="number"
-                  InputLabelProps={{ shrink: true }} //What does this do?
-                  value={minProtein}
-                  name="minProtein"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  onChange={handleValueChange}
-                  label="Include Ingredients"
-                  InputLabelProps={{ shrink: true }}
-                  value={includeIngredients}
-                  name="includeIngredients"
-                />
-              </Grid>
-            </Grid>
+            <Filters
+              handleValueChange={handleValueChange}
+              minCalories={minCalories}
+              maxCarbs={maxCarbs}
+              minProtein={minProtein}
+              includeIngredients={includeIngredients}
+            />
           </Collapse>
         </Grid>
         {recipes[0] &&
@@ -159,13 +137,14 @@ function App() {
             const id = uuidv4();
             const { imageUrl, title, url, nutrition } = recipe;
             return (
-              <RecipeCard
-                key={id}
-                imageUrl={imageUrl}
-                title={title}
-                url={url}
-                nutrition={nutrition}
-              />
+              <Grid key={id} item xs={10}>
+                <RecipeCard
+                  imageUrl={imageUrl}
+                  title={title}
+                  url={url}
+                  nutrition={nutrition}
+                />
+              </Grid>
             );
           })}
       </Grid>
