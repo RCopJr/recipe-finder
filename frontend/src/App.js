@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import {
-  Button,
-  TextField,
+  AppBar,
   Grid,
   Collapse,
   Paper,
   IconButton,
   InputBase,
   Divider,
+  Toolbar,
+  Typography,
 } from "@mui/material";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import RemoveCircleOutlineRoundedIcon from "@mui/icons-material/RemoveCircleOutlineRounded";
@@ -44,7 +45,6 @@ function App() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log("clicked");
     client
       .get("/search", {
         params: {
@@ -53,7 +53,6 @@ function App() {
         },
       })
       .then((res) => {
-        console.log(res.data.recipes);
         setRecipes(res.data.recipes);
       });
   }
@@ -75,8 +74,17 @@ function App() {
     }));
   }
 
+  const useStyles = {};
+
   return (
     <>
+      <AppBar position="static" sx={{ mb: 2 }}>
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Recipe Finder
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Grid
         container
         spacing={2}
@@ -85,7 +93,7 @@ function App() {
         justifyContent="center"
         wrap="wrap"
       >
-        <Grid item xs={11}>
+        <Grid item xs={12}>
           <Paper
             sx={{
               p: "2px 4px",
@@ -117,7 +125,7 @@ function App() {
             </IconButton>
           </Paper>
         </Grid>
-        <Grid item xs={11}>
+        <Grid item xs={12}>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <Filters
               handleValueChange={handleValueChange}
@@ -133,7 +141,7 @@ function App() {
             const id = uuidv4();
             const { imageUrl, title, url, nutrition } = recipe;
             return (
-              <Grid key={id} item xs={11}>
+              <Grid key={id} item xs={12}>
                 <RecipeCard
                   imageUrl={imageUrl}
                   title={title}

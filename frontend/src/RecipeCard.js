@@ -7,6 +7,13 @@ import {
   CardMedia,
   CardActions,
   Button,
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
 } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,7 +21,7 @@ function RecipeCard(props) {
   const { imageUrl, title, url, nutrition } = props;
   return (
     <Card variant="outlined">
-      <CardMedia component="img" height="160" image={imageUrl} />
+      <CardMedia component="img" height="140" image={imageUrl} />
       <CardContent>
         <Typography
           sx={{ fontSize: 20 }}
@@ -24,15 +31,29 @@ function RecipeCard(props) {
         >
           {title}
         </Typography>
-        {nutrition.map((nutrient) => {
-          const id = uuidv4();
-          const { name, amount, unit } = nutrient;
-          return (
-            <Typography key={id}>
-              {name}: {amount} {unit}
-            </Typography>
-          );
-        })}
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: "100px" }} size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Cals</TableCell>
+                <TableCell align="center">Carbs(g)</TableCell>
+                <TableCell align="center">Protein(g)</TableCell>
+                <TableCell align="center">Fat(g)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {nutrition.map((nutrient) => {
+                const id = uuidv4();
+                const { name, amount, unit } = nutrient;
+                return (
+                  <TableCell key={id} align="center">
+                    {Math.round(amount)}
+                  </TableCell>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </CardContent>
       <CardActions>
         <Button href={url}>View</Button>
