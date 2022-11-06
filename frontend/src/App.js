@@ -141,7 +141,7 @@ function App() {
             const id = uuidv4();
             const { imageUrl, title, url, nutrition } = recipe;
             return (
-              <Grid key={id} item xs={12}>
+              <Grid key={id} item xs={12} md={4}>
                 <RecipeCard
                   imageUrl={imageUrl}
                   title={title}
