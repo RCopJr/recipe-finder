@@ -10,8 +10,6 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
-import RemoveCircleOutlineRoundedIcon from "@mui/icons-material/RemoveCircleOutlineRounded";
 import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -19,10 +17,44 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import RecipeCard from "./RecipeCard";
 import Filters from "./Filters";
+import { styled, alpha } from "@mui/material/styles";
 
 const client = axios.create({
   baseURL: "http://localhost:3000/",
 });
+
+const Search = styled("div")(({ theme }) => ({
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  margin: "auto",
+  width: "auto",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 1),
+    transition: theme.transitions.create("width"),
+    // width: "100%",
+    width: "20ch",
+    "&:focus": {
+      width: "30ch",
+    },
+    [theme.breakpoints.up("sm")]: {
+      width: "30ch",
+      "&:focus": {
+        width: "40ch",
+      },
+    },
+  },
+}));
 
 function App() {
   const [search, setSearch] = useState("");
@@ -43,18 +75,19 @@ function App() {
     setSearch(event.target.value);
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    client
-      .get("/search", {
-        params: {
-          search: search,
-          queryParams: values,
-        },
-      })
-      .then((res) => {
-        setRecipes(res.data.recipes);
-      });
+  function handleKeyDown(event) {
+    if (event.key === "Enter") {
+      client
+        .get("/search", {
+          params: {
+            search: search,
+            queryParams: values,
+          },
+        })
+        .then((res) => {
+          setRecipes(res.data.recipes);
+        });
+    }
   }
 
   function handleCheckboxChange() {
@@ -74,15 +107,25 @@ function App() {
     }));
   }
 
-  const useStyles = {};
-
   return (
     <>
       <AppBar position="static" sx={{ mb: 2 }}>
         <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+          >
             Recipe Finder
           </Typography>
+          <Search>
+            <StyledInputBase
+              onChange={handleSearch}
+              value={search}
+              placeholder="Search..."
+              inputProps={{ "aria-label": "search" }}
+              onKeyDown={handleKeyDown}
+            ></StyledInputBase>
+          </Search>
         </Toolbar>
       </AppBar>
       <Grid
@@ -93,7 +136,10 @@ function App() {
         justifyContent="center"
         wrap="wrap"
       >
-        <Grid item xs={12}>
+        <Grid item xs={10}>
+          <Typography variant="h4">Recipe Results</Typography>
+        </Grid>
+        <Grid item xs={2}>
           <Paper
             sx={{
               p: "2px 4px",
@@ -107,21 +153,6 @@ function App() {
               aria-label="expand"
             >
               {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            </IconButton>
-            <InputBase
-              onChange={handleSearch}
-              placeholder="Search Recipes"
-              sx={{ ml: 1, flex: 1 }}
-              inputProps={{ "aria-label": "search recipes" }}
-              value={search}
-            />
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton
-              onClick={handleSubmit}
-              sx={{ p: "10px" }}
-              aria-label="search"
-            >
-              <SearchIcon />
             </IconButton>
           </Paper>
         </Grid>

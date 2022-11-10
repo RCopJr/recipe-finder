@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -42,15 +41,17 @@ function RecipeCard(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {nutrition.map((nutrient) => {
-                const id = uuidv4();
-                const { name, amount, unit } = nutrient;
-                return (
-                  <TableCell key={id} align="center">
-                    {Math.round(amount)}
-                  </TableCell>
-                );
-              })}
+              <TableRow>
+                {nutrition.map((nutrient) => {
+                  const id = uuidv4();
+                  const { amount } = nutrient;
+                  return (
+                    <TableCell key={id} align="center">
+                      {Math.round(amount)}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
