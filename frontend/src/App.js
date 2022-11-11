@@ -3,16 +3,11 @@ import {
   AppBar,
   Grid,
   Collapse,
-  Paper,
-  IconButton,
+  Button,
   InputBase,
-  Divider,
   Toolbar,
   Typography,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import RecipeCard from "./RecipeCard";
@@ -23,11 +18,15 @@ const client = axios.create({
   baseURL: "http://localhost:3000/",
 });
 
+const Body = styled("div")(({ theme }) => ({
+  padding: "0",
+}));
+
 const Search = styled("div")(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  borderRadius: theme.shape.borderRadius * 2,
+  backgroundColor: alpha(theme.palette.common.white, 0.25),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.common.white, 0.35),
   },
   margin: "auto",
   width: "auto",
@@ -42,8 +41,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 1),
     transition: theme.transitions.create("width"),
-    // width: "100%",
-    width: "20ch",
+    width: "25ch",
     "&:focus": {
       width: "30ch",
     },
@@ -90,7 +88,7 @@ function App() {
     }
   }
 
-  function handleCheckboxChange() {
+  function handleFilterClick() {
     setExpanded(!expanded);
   }
 
@@ -108,7 +106,7 @@ function App() {
   }
 
   return (
-    <>
+    <Body>
       <AppBar position="static" sx={{ mb: 2 }}>
         <Toolbar>
           <Typography
@@ -136,27 +134,24 @@ function App() {
         justifyContent="center"
         wrap="wrap"
       >
-        <Grid item xs={10}>
-          <Typography variant="h4">Recipe Results</Typography>
+        <Grid container item justifyContent="space-between" xs={11}>
+          <Grid item xs={5}>
+            {recipes.length > 0 && (
+              <>
+                <Typography variant="h4">Results</Typography>
+                <Typography variant="subtitle2">
+                  {recipes.length} recipes found
+                </Typography>
+              </>
+            )}
+          </Grid>
+          <Grid item xs="auto">
+            <Button onClick={handleFilterClick} variant="contained">
+              {expanded ? "Hide" : "Filters"}
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={2}>
-          <Paper
-            sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <IconButton
-              onClick={handleCheckboxChange}
-              sx={{ p: "10px" }}
-              aria-label="expand"
-            >
-              {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            </IconButton>
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={11}>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <Filters
               handleValueChange={handleValueChange}
@@ -172,7 +167,7 @@ function App() {
             const id = uuidv4();
             const { imageUrl, title, url, nutrition } = recipe;
             return (
-              <Grid key={id} item xs={12} md={4}>
+              <Grid key={id} item xs={11} md={4}>
                 <RecipeCard
                   imageUrl={imageUrl}
                   title={title}
@@ -183,7 +178,7 @@ function App() {
             );
           })}
       </Grid>
-    </>
+    </Body>
   );
 }
 
