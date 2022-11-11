@@ -40,6 +40,7 @@ app.get("/search", function (req, res) {
         const nutrition = nutrients.filter((nutrient) => {
           return cardData.includes(nutrient.name);
         });
+
         return {
           imageUrl: imageUrl,
           title: title,

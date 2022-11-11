@@ -46,9 +46,9 @@ function RecipeCard(props) {
               <TableHead>
                 <TableRow>
                   <TableCell align="center">Cals (kcal)</TableCell>
+                  <TableCell align="center">Fat (g)</TableCell>
                   <TableCell align="center">Carbs (g)</TableCell>
                   <TableCell align="center">Protein (g)</TableCell>
-                  <TableCell align="center">Fat (g)</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

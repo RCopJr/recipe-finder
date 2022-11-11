@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 import RecipeCard from "./RecipeCard";
 import Filters from "./Filters";
 import { styled, alpha } from "@mui/material/styles";
-import "./App.css";
+import "../App.css";
 
 const client = axios.create({
   baseURL: "http://localhost:3000/",
@@ -57,15 +57,30 @@ function App() {
   const [recipes, setRecipes] = useState([]);
 
   const [values, setValues] = useState({
+    minFat: "",
+    maxFat: "",
+    minCarbs: "",
     maxCarbs: "",
     minProtein: "",
+    maxProtein: "",
     minCalories: "",
+    maxCalories: "",
     includeIngredients: "",
   });
 
   const [expanded, setExpanded] = useState(false);
 
-  const { maxCarbs, minProtein, minCalories, includeIngredients } = values;
+  const {
+    minCarbs,
+    maxCarbs,
+    minFat,
+    maxFat,
+    minProtein,
+    maxProtein,
+    minCalories,
+    maxCalories,
+    includeIngredients,
+  } = values;
 
   function handleSearch(event) {
     setSearch(event.target.value);
@@ -155,8 +170,13 @@ function App() {
             <Filters
               handleValueChange={handleValueChange}
               minCalories={minCalories}
+              maxCalories={maxCalories}
+              minFat={minFat}
+              maxFat={maxFat}
+              minCarbs={minCarbs}
               maxCarbs={maxCarbs}
               minProtein={minProtein}
+              maxProtein={maxProtein}
               includeIngredients={includeIngredients}
             />
           </Collapse>
