@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField, Grid, Typography, Divider, Paper } from "@mui/material";
-
+import FilterHeading from "./FilterHeading";
 import { styled, alpha } from "@mui/material/styles";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -19,8 +19,7 @@ function Filters(props) {
         spacing={2}
       >
         <Grid item xs={12}>
-          <Typography variant="h6">Carbs:</Typography>
-          <Divider />
+          <FilterHeading text="Carbs:" />
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -36,8 +35,7 @@ function Filters(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6">Calories:</Typography>
-          <Divider />
+          <FilterHeading text="Calories:" />
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -53,8 +51,7 @@ function Filters(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6">Protein:</Typography>
-          <Divider />
+          <FilterHeading text="Protein:" />
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -70,8 +67,7 @@ function Filters(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6">Ingredients:</Typography>
-          <Divider />
+          <FilterHeading text="Ingredients:" />
         </Grid>
         <Grid item xs={12}>
           <TextField
