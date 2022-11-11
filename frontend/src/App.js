@@ -14,14 +14,11 @@ import { v4 as uuidv4 } from "uuid";
 import RecipeCard from "./RecipeCard";
 import Filters from "./Filters";
 import { styled, alpha } from "@mui/material/styles";
+import "./App.css";
 
 const client = axios.create({
   baseURL: "http://localhost:3000/",
 });
-
-const Body = styled("div")(({ theme }) => ({
-  padding: "0",
-}));
 
 const Search = styled("div")(({ theme }) => ({
   borderRadius: theme.shape.borderRadius * 2,
@@ -107,7 +104,7 @@ function App() {
   }
 
   return (
-    <Body>
+    <>
       <AppBar position="static" sx={{ mb: 2 }}>
         <Toolbar>
           <Typography
@@ -180,7 +177,7 @@ function App() {
             );
           })}
       </Grid>
-    </Body>
+    </>
   );
 }
 
