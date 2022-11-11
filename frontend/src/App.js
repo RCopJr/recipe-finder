@@ -8,6 +8,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import RecipeCard from "./RecipeCard";
@@ -148,6 +149,7 @@ function App() {
           <Grid item xs="auto">
             <Button onClick={handleFilterClick} variant="contained">
               {expanded ? "Hide" : "Filters"}
+              <MoreVertIcon fontSize="small" />
             </Button>
           </Grid>
         </Grid>
