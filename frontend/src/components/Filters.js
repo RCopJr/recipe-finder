@@ -1,5 +1,4 @@
-import { Grid, Paper, TextField } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Grid, TextField } from "@mui/material";
 import React from "react";
 import FilterHeading from "./FilterHeading";
 import MaxMinFilterField from "./MaxMinFilterField";
