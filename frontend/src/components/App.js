@@ -1,22 +1,13 @@
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import {
-  AppBar,
-  Button,
-  Collapse,
-  Grid,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Collapse, Grid } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import "../App.css";
+import FilterButton from "./FilterButton";
 import Filters from "./Filters";
-import RecipeCard from "./RecipeCard";
-import StyledInputBase from "./styled/StyledInputBase";
-import StyledSearch from "./styled/StyledSearch";
-
+import Header from "./Header";
+import RecipeList from "./RecipeList";
+import ResultHeading from "./ResultHeading";
 const client = axios.create({
   baseURL: "http://localhost:3000/",
 });
@@ -26,11 +17,6 @@ const theme = createTheme({
     primary: {
       main: "#e67911",
       contrastText: "#fff",
-    },
-  },
-  typography: {
-    poster: {
-      color: "white",
     },
   },
 });
@@ -117,26 +103,11 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <AppBar position="static" sx={{ mb: 2 }}>
-        <Toolbar>
-          <Typography
-            variant="h6"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          >
-            Recipe Finder
-          </Typography>
-          <StyledSearch>
-            <StyledInputBase
-              onChange={handleSearch}
-              value={search}
-              placeholder="Search..."
-              inputProps={{ "aria-label": "search" }}
-              onKeyDown={handleKeyDown}
-              color="textPrimary"
-            ></StyledInputBase>
-          </StyledSearch>
-        </Toolbar>
-      </AppBar>
+      <Header
+        handleSearch={handleSearch}
+        handleKeyDown={handleKeyDown}
+        search={search}
+      />
       <Grid
         container
         spacing={2}
@@ -148,19 +119,14 @@ function App() {
         <Grid container item justifyContent="space-between" xs={11}>
           <Grid item xs={5}>
             {recipes && recipes.length > 0 && (
-              <>
-                <Typography variant="h4">Results</Typography>
-                <Typography variant="subtitle2">
-                  {recipes.length} recipes found
-                </Typography>
-              </>
+              <ResultHeading recipes={recipes} />
             )}
           </Grid>
           <Grid item xs="auto">
-            <Button onClick={handleFilterClick} variant="contained">
-              {expanded ? "Hide" : "Filters"}
-              <MoreVertIcon fontSize="small" />
-            </Button>
+            <FilterButton
+              handleFilterClick={handleFilterClick}
+              expanded={expanded}
+            />
           </Grid>
         </Grid>
         <Grid item xs={11}>
@@ -179,21 +145,7 @@ function App() {
             />
           </Collapse>
         </Grid>
-        {recipes[0] &&
-          recipes.map((recipe) => {
-            const id = uuidv4();
-            const { imageUrl, title, url, nutrition } = recipe;
-            return (
-              <Grid key={id} item xs={11} md={4}>
-                <RecipeCard
-                  imageUrl={imageUrl}
-                  title={title}
-                  url={url}
-                  nutrition={nutrition}
-                />
-              </Grid>
-            );
-          })}
+        {recipes[0] && <RecipeList recipes={recipes} />}
       </Grid>
     </ThemeProvider>
   );
