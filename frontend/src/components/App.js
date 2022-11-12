@@ -1,25 +1,21 @@
-import React, { useState, useEffect } from "react";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
   AppBar,
-  Grid,
-  Collapse,
   Button,
-  InputBase,
+  Collapse,
+  Grid,
   Toolbar,
   Typography,
 } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import RecipeCard from "./RecipeCard";
-import Filters from "./Filters";
-import {
-  styled,
-  alpha,
-  createTheme,
-  ThemeProvider,
-} from "@mui/material/styles";
 import "../App.css";
+import Filters from "./Filters";
+import RecipeCard from "./RecipeCard";
+import StyledInputBase from "./styled/StyledInputBase";
+import StyledSearch from "./styled/StyledSearch";
 
 const client = axios.create({
   baseURL: "http://localhost:3000/",
@@ -29,41 +25,15 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#e67911",
+      contrastText: "#fff",
+    },
+  },
+  typography: {
+    poster: {
+      color: "white",
     },
   },
 });
-
-const Search = styled("div")(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius * 2,
-  backgroundColor: alpha(theme.palette.common.white, 0.25),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.35),
-  },
-  margin: "auto",
-  width: "auto",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 1),
-    transition: theme.transitions.create("width"),
-    width: "25ch",
-    "&:focus": {
-      width: "30ch",
-    },
-    [theme.breakpoints.up("sm")]: {
-      width: "30ch",
-      "&:focus": {
-        width: "40ch",
-      },
-    },
-  },
-}));
 
 function App() {
   const [search, setSearch] = useState("");
@@ -95,6 +65,20 @@ function App() {
     includeIngredients,
   } = values;
 
+  async function getRecipes(search, values) {
+    try {
+      const response = await client.get("/search", {
+        params: {
+          search: search,
+          queryParams: values,
+        },
+      });
+      return response.data.recipes;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   function handleSearch(event) {
     setSearch(event.target.value);
   }
@@ -123,27 +107,13 @@ function App() {
     }));
   }
 
-  async function getRecipes(search, values) {
-    try {
-      const response = await client.get("/search", {
-        params: {
-          search: search,
-          queryParams: values,
-        },
-      });
-      return response.data.recipes;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   useEffect(() => {
     async function getInitialRecipes() {
       const newRecipes = await getRecipes(search, values);
       setRecipes(newRecipes);
     }
-    getInitialRecipes();
-  }, []);
+    //getInitialRecipes();
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -155,15 +125,16 @@ function App() {
           >
             Recipe Finder
           </Typography>
-          <Search>
+          <StyledSearch>
             <StyledInputBase
               onChange={handleSearch}
               value={search}
               placeholder="Search..."
               inputProps={{ "aria-label": "search" }}
               onKeyDown={handleKeyDown}
+              color="textPrimary"
             ></StyledInputBase>
-          </Search>
+          </StyledSearch>
         </Toolbar>
       </AppBar>
       <Grid
@@ -176,7 +147,7 @@ function App() {
       >
         <Grid container item justifyContent="space-between" xs={11}>
           <Grid item xs={5}>
-            {recipes.length > 0 && (
+            {recipes && recipes.length > 0 && (
               <>
                 <Typography variant="h4">Results</Typography>
                 <Typography variant="subtitle2">

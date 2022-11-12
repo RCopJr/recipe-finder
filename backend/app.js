@@ -10,47 +10,53 @@ app.use(bodyParser.json());
 
 const cardData = ["Protein", "Calories", "Fat", "Carbohydrates"];
 
-app.get("/search", (req, res) => {
-  const search = req.query.search;
-  const params = req.query.queryParams;
+async function searchRecipes(search, filteredParams) {
+  try {
+    return await axios.get(
+      "https://api.spoonacular.com/recipes/complexSearch",
+      {
+        params: {
+          apiKey: process.env.API_KEY,
+          number: 5,
+          addRecipeInformation: true,
+          addRecipeNutrition: true,
+          query: search,
+          ...filteredParams,
+        },
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+app.get("/search", async (req, res) => {
+  const { search, queryParams } = req.query;
   let filteredParams = Object.fromEntries(
-    Object.entries(params).filter(([_, v]) => v != "")
+    Object.entries(queryParams).filter(([_, v]) => v != "")
   ); //Remove empty parameters
-
-  axios
-    .get("https://api.spoonacular.com/recipes/complexSearch", {
-      params: {
-        apiKey: process.env.API_KEY,
-        number: 5,
-        addRecipeInformation: true,
-        addRecipeNutrition: true,
-        query: search,
-        ...filteredParams,
-      },
-    })
-    .then((response) => {
-      const results = response.data.results;
-      const formattedRecipes = results.map((result) => {
-        const {
-          title,
-          sourceUrl,
-          image: imageUrl,
-          nutrition: { nutrients },
-        } = result;
-        const nutrition = nutrients.filter((nutrient) => {
-          return cardData.includes(nutrient.name);
-        });
-
-        return {
-          imageUrl: imageUrl,
-          title: title,
-          url: sourceUrl,
-          nutrition: nutrition,
-        };
-      });
-
-      res.json({ recipes: formattedRecipes });
+  const response = await searchRecipes(search, filteredParams);
+  const results = response.data.results;
+  const formattedRecipes = results.map((result) => {
+    const {
+      title,
+      sourceUrl,
+      image: imageUrl,
+      nutrition: { nutrients },
+    } = result;
+    const nutrition = nutrients.filter((nutrient) => {
+      return cardData.includes(nutrient.name);
     });
+
+    return {
+      imageUrl: imageUrl,
+      title: title,
+      url: sourceUrl,
+      nutrition: nutrition,
+    };
+  });
+
+  res.json({ recipes: formattedRecipes });
 });
 
 app.listen(3001, function () {
