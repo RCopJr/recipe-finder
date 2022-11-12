@@ -1,12 +1,9 @@
+import { Grid, Paper, TextField } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import React from "react";
-import { TextField, Grid, Typography, Divider, Paper } from "@mui/material";
 import FilterHeading from "./FilterHeading";
 import MaxMinFilterField from "./MaxMinFilterField";
-import { styled, alpha } from "@mui/material/styles";
-
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(2),
-}));
+import StyledPaper from "./styled/StyledPaper";
 
 function Filters(props) {
   return (

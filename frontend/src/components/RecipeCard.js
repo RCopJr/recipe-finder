@@ -1,30 +1,20 @@
-import React from "react";
 import {
-  Card,
+  CardActionArea,
   CardContent,
-  Typography,
   CardMedia,
-  CardActions,
-  Button,
-  TableContainer,
   Paper,
   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  CardActionArea,
+  Typography,
 } from "@mui/material";
+import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import { styled } from "@mui/material/styles";
-
-const StyledCard = styled(Card)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius * 4,
-  transition: "box-shadow .3s",
-  ":hover": {
-    boxShadow: "0 2px 5px rgba(60, 60, 93, 0.33)",
-  },
-}));
+import Nutrient from "./Nutrient";
+import StyledCard from "./styled/StyledCard";
 
 function RecipeCard(props) {
   const { imageUrl, title, url, nutrition } = props;
@@ -55,14 +45,7 @@ function RecipeCard(props) {
                 <TableRow>
                   {nutrition.map((nutrient) => {
                     const id = uuidv4();
-                    const { amount } = nutrient;
-                    return (
-                      <TableCell key={id} align="center">
-                        <Typography variant="subtitle2">
-                          {Math.round(amount)}
-                        </Typography>
-                      </TableCell>
-                    );
+                    return <Nutrient key={id} nutrient={nutrient} />;
                   })}
                 </TableRow>
               </TableBody>
