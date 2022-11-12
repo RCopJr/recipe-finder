@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Grid,
@@ -13,11 +13,24 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import RecipeCard from "./RecipeCard";
 import Filters from "./Filters";
-import { styled, alpha } from "@mui/material/styles";
+import {
+  styled,
+  alpha,
+  createTheme,
+  ThemeProvider,
+} from "@mui/material/styles";
 import "../App.css";
 
 const client = axios.create({
   baseURL: "http://localhost:3000/",
+});
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#e67911",
+    },
+  },
 });
 
 const Search = styled("div")(({ theme }) => ({
@@ -86,18 +99,10 @@ function App() {
     setSearch(event.target.value);
   }
 
-  function handleKeyDown(event) {
+  async function handleKeyDown(event) {
     if (event.key === "Enter") {
-      client
-        .get("/search", {
-          params: {
-            search: search,
-            queryParams: values,
-          },
-        })
-        .then((res) => {
-          setRecipes(res.data.recipes);
-        });
+      const newRecipes = await getRecipes(search, values);
+      setRecipes(newRecipes);
     }
   }
 
@@ -118,8 +123,30 @@ function App() {
     }));
   }
 
+  async function getRecipes(search, values) {
+    try {
+      const response = await client.get("/search", {
+        params: {
+          search: search,
+          queryParams: values,
+        },
+      });
+      return response.data.recipes;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    async function getInitialRecipes() {
+      const newRecipes = await getRecipes(search, values);
+      setRecipes(newRecipes);
+    }
+    getInitialRecipes();
+  }, []);
+
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <AppBar position="static" sx={{ mb: 2 }}>
         <Toolbar>
           <Typography
@@ -197,7 +224,7 @@ function App() {
             );
           })}
       </Grid>
-    </>
+    </ThemeProvider>
   );
 }
 

@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 
 const cardData = ["Protein", "Calories", "Fat", "Carbohydrates"];
 
-app.get("/search", function (req, res) {
+app.get("/search", (req, res) => {
   const search = req.query.search;
   const params = req.query.queryParams;
   let filteredParams = Object.fromEntries(
