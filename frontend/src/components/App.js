@@ -2,7 +2,7 @@ import { Collapse, Grid } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "../App.css";
+import "../styles/App.css";
 import FilterButton from "./FilterButton";
 import Filters from "./Filters";
 import Header from "./Header";
@@ -24,7 +24,6 @@ const theme = createTheme({
 function App() {
   const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
-
   const [values, setValues] = useState({
     minFat: "",
     maxFat: "",
@@ -37,8 +36,7 @@ function App() {
     includeIngredients: "",
     excludeIngredients: "",
   });
-
-  const [expanded, setExpanded] = useState(false);
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const {
     minCarbs,
@@ -79,10 +77,10 @@ function App() {
   }
 
   function handleFilterClick() {
-    setExpanded(!expanded);
+    setFiltersExpanded(!filtersExpanded);
   }
   //Rename!!!
-  function handleValueChange(event) {
+  function handleFilterChange(event) {
     const name = event.target.name;
     let newValue = event.target.value;
 
@@ -101,7 +99,7 @@ function App() {
       setRecipes(newRecipes);
     }
     //getInitialRecipes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -128,14 +126,14 @@ function App() {
           <Grid item xs="auto">
             <FilterButton
               handleFilterClick={handleFilterClick}
-              expanded={expanded}
+              filtersExpanded={filtersExpanded}
             />
           </Grid>
         </Grid>
         <Grid item xs={11}>
-          <Collapse in={expanded} timeout={600} unmountOnExit>
+          <Collapse in={filtersExpanded} timeout={600} unmountOnExit>
             <Filters
-              handleValueChange={handleValueChange}
+              handleFilterChange={handleFilterChange}
               minCalories={minCalories}
               maxCalories={maxCalories}
               minFat={minFat}

@@ -15,7 +15,7 @@ function Filters(props) {
         wrap="wrap"
         spacing={2}
       >
-        <Grid container spacing={2} item xs={12} md={3}>
+        <Grid container spacing={2} item xs={12} sm={6} md={3}>
           <Grid item xs={12}>
             <FilterHeading text="Calories (kcal):" />
           </Grid>
@@ -25,11 +25,11 @@ function Filters(props) {
               minName="minCalories"
               max={props.maxCalories}
               maxName="maxCalories"
-              handleValueChange={props.handleValueChange}
+              handleFilterChange={props.handleFilterChange}
             />
           </Grid>
         </Grid>
-        <Grid container spacing={2} item xs={12} md={3}>
+        <Grid container spacing={2} item xs={12} sm={6} md={3}>
           <Grid item xs={12}>
             <FilterHeading text="Carbs (g):" />
           </Grid>
@@ -39,11 +39,11 @@ function Filters(props) {
               minName="minCarbs"
               max={props.maxCarbs}
               maxName="maxCarbs"
-              handleValueChange={props.handleValueChange}
+              handleFilterChange={props.handleFilterChange}
             />
           </Grid>
         </Grid>
-        <Grid container spacing={2} item xs={12} md={3}>
+        <Grid container spacing={2} item xs={12} sm={6} md={3}>
           <Grid item xs={12}>
             <FilterHeading text="Protein (g):" />
           </Grid>
@@ -53,11 +53,11 @@ function Filters(props) {
               minName="minProtein"
               max={props.maxProtein}
               maxName="maxProtein"
-              handleValueChange={props.handleValueChange}
+              handleFilterChange={props.handleFilterChange}
             />
           </Grid>
         </Grid>
-        <Grid container spacing={2} item xs={12} md={3}>
+        <Grid container spacing={2} item xs={12} sm={6} md={3}>
           <Grid item xs={12}>
             <FilterHeading text="Fat (g):" />
           </Grid>
@@ -67,17 +67,17 @@ function Filters(props) {
               minName="minFat"
               max={props.maxFat}
               maxName="maxFat"
-              handleValueChange={props.handleValueChange}
+              handleFilterChange={props.handleFilterChange}
             />
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <FilterHeading text="Ingredients:" />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} sm={6}>
           <TextField
             onChange={(event) => {
-              props.handleValueChange(event);
+              props.handleFilterChange(event);
             }}
             label="Include"
             InputLabelProps={{ shrink: true }}
@@ -86,10 +86,10 @@ function Filters(props) {
             fullWidth
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} sm={6}>
           <TextField
             onChange={(event) => {
-              props.handleValueChange(event);
+              props.handleFilterChange(event);
             }}
             label="Exclude"
             InputLabelProps={{ shrink: true }}

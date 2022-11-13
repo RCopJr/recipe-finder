@@ -10,7 +10,7 @@ function FilterButton(props) {
       }}
       variant="contained"
     >
-      {props.expanded ? "Hide" : "Filters"}
+      {props.filtersExpanded ? "Hide" : "Filters"}
       <MoreVertIcon fontSize="small" />
     </Button>
   );

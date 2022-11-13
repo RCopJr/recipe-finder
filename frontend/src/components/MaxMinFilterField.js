@@ -1,5 +1,5 @@
-import React from "react";
 import { Grid, TextField } from "@mui/material";
+import React from "react";
 
 function MaxMinFilterField(props) {
   return (
@@ -7,7 +7,7 @@ function MaxMinFilterField(props) {
       <Grid item xs={6}>
         <TextField
           onChange={(event) => {
-            props.handleValueChange(event);
+            props.handleFilterChange(event);
           }}
           label="Min"
           type="number"
@@ -20,7 +20,7 @@ function MaxMinFilterField(props) {
       <Grid item xs={6}>
         <TextField
           onChange={(event) => {
-            props.handleValueChange(event);
+            props.handleFilterChange(event);
           }}
           label="Max"
           type="number"
