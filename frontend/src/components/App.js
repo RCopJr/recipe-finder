@@ -35,6 +35,7 @@ function App() {
     minCalories: "",
     maxCalories: "",
     includeIngredients: "",
+    excludeIngredients: "",
   });
 
   const [expanded, setExpanded] = useState(false);
@@ -49,6 +50,7 @@ function App() {
     minCalories,
     maxCalories,
     includeIngredients,
+    excludeIngredients,
   } = values;
 
   async function getRecipes(search, values) {
@@ -99,7 +101,8 @@ function App() {
       setRecipes(newRecipes);
     }
     //getInitialRecipes();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -130,7 +133,7 @@ function App() {
           </Grid>
         </Grid>
         <Grid item xs={11}>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <Collapse in={expanded} timeout={600} unmountOnExit>
             <Filters
               handleValueChange={handleValueChange}
               minCalories={minCalories}
@@ -142,10 +145,13 @@ function App() {
               minProtein={minProtein}
               maxProtein={maxProtein}
               includeIngredients={includeIngredients}
+              excludeIngredients={excludeIngredients}
             />
           </Collapse>
         </Grid>
-        {recipes[0] && <RecipeList recipes={recipes} />}
+        <Grid container spacing={2} item xs={11}>
+          {recipes[0] && <RecipeList recipes={recipes} />}
+        </Grid>
       </Grid>
     </ThemeProvider>
   );
