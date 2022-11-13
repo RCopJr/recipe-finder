@@ -1,7 +1,7 @@
 import { Grid, TextField } from "@mui/material";
 import React from "react";
 
-function MaxMinFilterField(props) {
+function FilterRangeField(props) {
   return (
     <>
       <Grid item xs={6}>
@@ -34,4 +34,4 @@ function MaxMinFilterField(props) {
   );
 }
 
-export default MaxMinFilterField;
+export default FilterRangeField;

@@ -1,7 +1,7 @@
 import { Grid, TextField } from "@mui/material";
 import React from "react";
 import FilterHeading from "./FilterHeading";
-import MaxMinFilterField from "./MaxMinFilterField";
+import FilterRangeField from "./FilterRangeField";
 import StyledPaper from "./styled/StyledPaper";
 
 function Filters(props) {
@@ -20,7 +20,7 @@ function Filters(props) {
             <FilterHeading text="Calories (kcal):" />
           </Grid>
           <Grid container spacing={2} item xs={12}>
-            <MaxMinFilterField
+            <FilterRangeField
               min={props.minCalories}
               minName="minCalories"
               max={props.maxCalories}
@@ -34,7 +34,7 @@ function Filters(props) {
             <FilterHeading text="Carbs (g):" />
           </Grid>
           <Grid container spacing={2} item xs={12}>
-            <MaxMinFilterField
+            <FilterRangeField
               min={props.minCarbs}
               minName="minCarbs"
               max={props.maxCarbs}
@@ -48,7 +48,7 @@ function Filters(props) {
             <FilterHeading text="Protein (g):" />
           </Grid>
           <Grid container spacing={2} item xs={12}>
-            <MaxMinFilterField
+            <FilterRangeField
               min={props.minProtein}
               minName="minProtein"
               max={props.maxProtein}
@@ -62,7 +62,7 @@ function Filters(props) {
             <FilterHeading text="Fat (g):" />
           </Grid>
           <Grid container spacing={2} item xs={12}>
-            <MaxMinFilterField
+            <FilterRangeField
               min={props.minFat}
               minName="minFat"
               max={props.maxFat}
