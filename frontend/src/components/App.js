@@ -131,7 +131,7 @@ function App() {
           </Grid>
         </Grid>
         <Grid item xs={11}>
-          <Collapse in={filtersExpanded} timeout={600} unmountOnExit>
+          <Collapse in={filtersExpanded} timeout="auto" unmountOnExit>
             <Filters
               handleFilterChange={handleFilterChange}
               minCalories={minCalories}
