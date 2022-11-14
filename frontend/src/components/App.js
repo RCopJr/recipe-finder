@@ -79,7 +79,7 @@ function App() {
   function handleFilterClick() {
     setFiltersExpanded(!filtersExpanded);
   }
-  //Rename!!!
+
   function handleFilterChange(event) {
     const name = event.target.name;
     let newValue = event.target.value;

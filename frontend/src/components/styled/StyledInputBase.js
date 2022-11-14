@@ -1,14 +1,14 @@
-import { styled } from "@mui/material/styles";
 import { InputBase } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 1),
     transition: theme.transitions.create("width"),
-    width: "25ch",
+    width: "20ch",
     "&:focus": {
-      width: "30ch",
+      width: "25ch",
     },
     [theme.breakpoints.up("sm")]: {
       width: "30ch",

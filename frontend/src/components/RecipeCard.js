@@ -27,6 +27,7 @@ function RecipeCard(props) {
             sx={{ fontSize: 20 }}
             variant="h6"
             color="text.secondary"
+            noWrap
             gutterBottom
           >
             {title}
