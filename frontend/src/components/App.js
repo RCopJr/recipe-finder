@@ -8,9 +8,6 @@ import Filters from "./Filters";
 import Header from "./Header";
 import RecipeList from "./RecipeList";
 import ResultHeading from "./ResultHeading";
-const client = axios.create({
-  baseURL: "http://localhost:3000/",
-});
 
 const theme = createTheme({
   palette: {
@@ -53,7 +50,7 @@ function App() {
 
   async function getRecipes(search, values) {
     try {
-      const response = await client.get("/search", {
+      const response = await axios.get("/search", {
         params: {
           search: search,
           queryParams: values,
