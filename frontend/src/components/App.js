@@ -95,7 +95,7 @@ function App() {
       const newRecipes = await getRecipes(search, values);
       setRecipes(newRecipes);
     }
-    //getInitialRecipes();
+    getInitialRecipes();
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

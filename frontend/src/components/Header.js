@@ -12,19 +12,23 @@ function Header(props) {
           sx={{
             display: { xs: "none", sm: "block" },
             pl: 1,
-            height: 80,
+            pt: 1,
+            pb: 1,
+            height: 50,
           }}
           alt="logo"
-          src="./recipe-finder-high-resolution-color-logo-2.png"
+          src="./recipe-finder-high-resolution-logo-color-on-transparent-background.png"
         />
         <Box
           component="img"
           sx={{
             display: { xs: "block", sm: "none" },
-            height: 70,
+            pt: 1,
+            pb: 1,
+            height: 55,
           }}
           alt="logo"
-          src="./recipe-finder-high-resolution-color-logo-small.png"
+          src="./recipe-finder-high-resolution-icon-logo-color-on-transparent-background.png"
         />
         <StyledSearch>
           <StyledInputBase

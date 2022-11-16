@@ -8,6 +8,8 @@ app.use(express.static("build"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+const PORT = process.env.PORT || 3001;
+
 const cardData = ["Protein", "Calories", "Fat", "Carbohydrates"];
 
 async function searchRecipes(search, filteredParams) {
@@ -59,6 +61,6 @@ app.get("/search", async (req, res) => {
   res.json({ recipes: formattedRecipes });
 });
 
-app.listen(3001, function () {
+app.listen(PORT, function () {
   console.log("Server started on port 3001.");
 });

@@ -8,7 +8,7 @@ function RecipeList(props) {
     const id = uuidv4();
     const { imageUrl, title, url, nutrition } = recipe;
     return (
-      <Grid key={id} item xs={12} md={3}>
+      <Grid key={id} item xs={12} sm={6} md={4} lg={3}>
         <RecipeCard
           imageUrl={imageUrl}
           title={title}
