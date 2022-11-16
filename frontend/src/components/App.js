@@ -12,7 +12,7 @@ import ResultHeading from "./ResultHeading";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#e67911",
+      main: "#f77f00",
       contrastText: "#fff",
     },
   },
@@ -116,9 +116,7 @@ function App() {
       >
         <Grid container item justifyContent="space-between" xs={11}>
           <Grid item xs={5}>
-            {recipes && recipes.length > 0 && (
-              <ResultHeading recipes={recipes} />
-            )}
+            <ResultHeading recipes={recipes} />
           </Grid>
           <Grid item xs="auto">
             <FilterButton

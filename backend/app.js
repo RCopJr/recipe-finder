@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 3001;
+const NUM_RECIPES = 10;
 
 const cardData = ["Protein", "Calories", "Fat", "Carbohydrates"];
 
@@ -19,7 +20,7 @@ async function searchRecipes(search, filteredParams) {
       {
         params: {
           apiKey: process.env.API_KEY,
-          number: 5,
+          number: NUM_RECIPES,
           addRecipeInformation: true,
           addRecipeNutrition: true,
           query: search,

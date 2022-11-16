@@ -5,7 +5,7 @@ function ResultHeading(props) {
     <>
       <Typography variant="h4">Results</Typography>
       <Typography variant="subtitle2">
-        {props.recipes.length} recipes found
+        {props.recipes ? props.recipes.length : 0} recipes found
       </Typography>
     </>
   );
