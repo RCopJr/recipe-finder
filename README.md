@@ -8,7 +8,7 @@
 
 # 📱 Mobile Friendly
 
-![demo mobile landing page](https://github.com/RCopJr/recipe-finder/blob/master/images/mobile_landing_page.png?raw=true)
+<img src="https://github.com/RCopJr/recipe-finder/blob/master/images/mobile_landing_page.png?raw=true" alt="demo mobile landing page" width="200" />
 
 # 🧑‍💻 Tech Stack, APIs, Tools
 
