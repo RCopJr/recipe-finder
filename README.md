@@ -1,6 +1,6 @@
 # 🥘 Recipe Finder
 
-[Recipe Finder](recipefinder.up.railway.app) is a web app for fetching recipes quickly and easily!
+[Recipe Finder](https://recipefinder.up.railway.app) is a web app for fetching recipes quickly and easily!
 
 <img src="images/landing_page.png" alt="demo filtered search" />
 
