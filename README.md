@@ -2,11 +2,13 @@
 
 [Recipe Finder](recipefinder.up.railway.app) is a web app for fetching recipes quickly and easily!
 
-![demo landing page](https://github.com/RCopJr/recipe-finder/blob/master/images/landing_page.png?raw=true)
+<img src="images/landing_page.png" alt="demo filtered search" />
 
-![demo filtered search](https://github.com/RCopJr/recipe-finder/blob/master/images/filtered_search.png?raw=true)
+## 🔎 Refined Searches
 
-# 📱 Mobile Friendly
+<img src="images/filtered_search.png" alt="demo filtered search" />
+
+## 📱 Mobile Friendly
 
 <img src="images/mobile_landing_page.png" alt="demo mobile landing page" width="200" />
 
