@@ -1,4 +1,4 @@
-# 🥘 Recipe Finder
+![Recipe Finder](images/recipe-finder-high-resolution-logo-color-on-transparent-background.png)
 
 [Recipe Finder](https://recipefinder.up.railway.app) is a web app for fetching recipes quickly and easily!
 
