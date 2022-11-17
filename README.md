@@ -1,4 +1,6 @@
-![Logo](images/recipe-finder-high-resolution-logo-black-on-white-background.png)
+<div align="center">
+    <img src="images/recipe-finder-high-resolution-logo-black-on-white-background.png" alt="Recipe Finder Logo" width="650"/>
+</div>
 
 ---
 
