@@ -1,5 +1,9 @@
 ![Recipe Finder](images/recipe-finder-high-resolution-logo-color-on-transparent-background.png)
 
+<div align='center'>
+    <img src="images/recipe-finder-high-resolution-logo-color-on-transparent-background.png" alt="Recipe Finder Logo" />
+</div>
+
 [Recipe Finder](https://recipefinder.up.railway.app) is a web app for fetching recipes quickly and easily!
 
 <img src="images/landing_page.png" alt="demo filtered search" />
