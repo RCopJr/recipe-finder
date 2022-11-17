@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="images/recipe-finder-high-resolution-logo-black-on-white-background.png" alt="Recipe Finder Logo" width="650"/>
+    <img src="images/recipe-finder-high-resolution-logo-color-on-transparent-background.png" alt="Recipe Finder Logo" width="650" style="border-radius: 10px"/>
 </div>
 
 ---
