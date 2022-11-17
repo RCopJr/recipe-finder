@@ -1,4 +1,4 @@
-<div align='center' style="padding-bottom:50px">
+<div align='center' style="padding-bottom:50px;">
     <img src="images/recipe-finder-high-resolution-logo-color-on-transparent-background.png" alt="Recipe Finder Logo" width="650"/>
 </div>
 
